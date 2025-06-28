@@ -12,6 +12,7 @@ function App() {
 	const [selectedCoins, setSelectedCoins] = useState([]);
 	const [outputCoins, setOutputCoins] = useState([]);
 	const [targetAmount, setTargetAmount] = useState(0.0);
+	const [msg, setMsg] = useState('');
 
 	const handleCheckBoxChange = (val) => {
 		setSelectedCoins((prev) => {
@@ -24,13 +25,23 @@ function App() {
 
 	//to handle parse input as float and store in state.
 	const handleInputChange = (e) => {
-		let input = e.target.value;
-		input = parseFloat(input);
-		if (!isNaN(input)) {
-			setTargetAmount(input);
-		} else {
+		const input = e.target.value;
+		const parsed = parseFloat(input);
+		//validation check to ensure input passed is not letters and not 0
+		if (
+			input.trim() === '' ||
+			isNaN(parsed) ||
+			parsed === 0 ||
+			parsed >= 10000
+		) {
+			setMsg('Please input a valid number between 1 to 10,000.00');
 			setTargetAmount(0);
+			return;
 		}
+
+		// if input is a valid number, clear off any existing error msg
+		setMsg('');
+		setTargetAmount(parsed);
 	};
 
 	//trigger api req to backend, passing targetAmount and selectedCoins as body, retrieving and storing
@@ -86,6 +97,7 @@ function App() {
 							onChange={(e) => handleInputChange(e)}
 						/>
 					</div>
+					{msg && <p className='text-danger'>{msg}</p>}
 					<div className='mt-4'>
 						<label>Coin Demoninator:</label>
 						<div className='d-flex flex-wrap justify-content-center gap-2 mt-1'>

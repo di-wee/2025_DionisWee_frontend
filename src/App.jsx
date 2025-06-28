@@ -22,7 +22,7 @@ function App() {
 		});
 	};
 
-	//to handle parse input as float and store in state,
+	//to handle parse input as float and store in state.
 	const handleInputChange = (e) => {
 		let input = e.target.value;
 		input = parseFloat(input);

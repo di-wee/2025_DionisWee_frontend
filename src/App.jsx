@@ -8,6 +8,7 @@ function App() {
 	//denominator values to be mapped
 	const values = [0.01, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 50, 100, 1000];
 	const outputVal = [];
+	const url = import.meta.env.VITE_SERVER;
 
 	const [selectedCoins, setSelectedCoins] = useState([]);
 	const [outputCoins, setOutputCoins] = useState([]);
@@ -33,11 +34,36 @@ function App() {
 		}
 	};
 
-	//trigger of api req to backend
-	const handleSubmit = (e) => {
+	//trigger api req to backend, passing targetAmount and selectedCoins as body, retrieving and storing
+	//response body into state on successful retrieval of results.
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		console.log(
 			`selectedCoins: ${selectedCoins}, targeted amount: ${targetAmount}`
 		);
+
+		try {
+			const res = await fetch(url + '/api/v1/coinChange', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					targetAmount: targetAmount,
+					denominations: selectedCoins,
+				}),
+			});
+
+			if (!res.ok) {
+				throw new Error('API request failed');
+			}
+
+			const result = await res.json();
+			console.log('results: ', result);
+			setOutputCoins(result);
+		} catch (error) {
+			console.error('error with API req: ', error);
+		}
 	};
 
 	return (

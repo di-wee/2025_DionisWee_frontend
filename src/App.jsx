@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 	//denominator values to be mapped
 	const values = [0.01, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 50, 100, 1000];
-	const outputVal = [];
 	const url = import.meta.env.VITE_SERVER;
 
 	const [selectedCoins, setSelectedCoins] = useState([]);
@@ -37,6 +36,7 @@ function App() {
 	//trigger api req to backend, passing targetAmount and selectedCoins as body, retrieving and storing
 	//response body into state on successful retrieval of results.
 	const handleSubmit = async (e) => {
+		console.log(url);
 		e.preventDefault();
 		console.log(
 			`selectedCoins: ${selectedCoins}, targeted amount: ${targetAmount}`
@@ -122,7 +122,7 @@ function App() {
 			<div className='mt-5'>
 				<label>Output coins:</label>
 				<div className='d-flex flex-wrap justify-content-center gap-2 mt-1'>
-					{outputVal.map((val, idx) => {
+					{outputCoins.map((val, idx) => {
 						const id = `btncheck-${idx}`;
 						return (
 							<div>
@@ -132,7 +132,6 @@ function App() {
 					})}
 				</div>
 			</div>
-			<button onClick={(e) => handleSubmit(e)}></button>
 		</>
 	);
 }

@@ -34,7 +34,7 @@ function App() {
 			parsed === 0 ||
 			parsed >= 10000
 		) {
-			setMsg('Please input a valid number between 1 to 10,000.00');
+			setMsg('Please input a valid number between 0 to 10,000.00');
 			setTargetAmount(0);
 			return;
 		}

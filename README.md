@@ -74,12 +74,12 @@ http:/54.169.133.117:5173/
 Make sure your frontend fetches data from the correct backend API endpoint. For example:
 
 ```javascript
-fetch("http://<BACKEND_PUBLIC_IP>:8080/api/v1/coin-change", { ... })
+fetch("http://54.169.133.117:8080/api/v1/coinChange", { ... })
 ```
 
 
 ```env
-VITE_API_URL=http://<BACKEND_PUBLIC_IP>:8080/api/v1
+VITE_API_URL=http://54.169.133.117:8080/api/v1
 ```
 
 
